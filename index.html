@@ -11,15 +11,15 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fce7f3;
+            background-color: #fce7f3; 
             padding: 1rem; 
             overflow-x: hidden;
         }
 
         .celebratory-text {
             font-family: 'Pacifico', cursive;
-            text-shadow: 2px 2px #fef08a;
-            color: #db2777;
+            text-shadow: 2px 2px #fef08a; 
+            color: #db2777; 
         }
 
         @keyframes pulse {
@@ -60,16 +60,16 @@
         }
 
         .photo-frame {
+            display: none; 
             position: absolute;
             overflow: hidden;
             border-radius: 1rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             transform: rotate(var(--rotation, 0deg));
             z-index: 5;
-            border: 3px solid #fef08a;
+            border: 3px solid #fef08a; 
             transition: opacity 1s ease-out; 
             opacity: 0;
-
             width: 70px;
             height: 70px;
         }
@@ -85,15 +85,22 @@
         .photo-3 { top: 5%; right: 2%; --rotation: 7deg; }
         .photo-4 { top: 20%; right: 5%; --rotation: -10deg; }
 
+
         @media (min-width: 768px) {
             .photo-frame {
+                display: block;
                 width: 100px;
                 height: 100px;
             }
-            .photo-1 { top: 15%; left: 5%; --rotation: -8deg; }
-            .photo-2 { top: 40%; left: 8%; --rotation: 12deg; }
-            .photo-3 { top: 15%; right: 5%; --rotation: 10deg; }
-            .photo-4 { top: 40%; right: 8%; --rotation: -15deg; }
+
+            .photo-1 { top: 10%; left: 10%; --rotation: -8deg; }
+            .photo-2 { top: 50%; left: 5%; --rotation: 12deg; }
+            .photo-3 { top: 10%; right: 10%; --rotation: 10deg; }
+            .photo-4 { top: 50%; right: 5%; --rotation: -15deg; }
+
+            .main-card-wrapper {
+                max-width: 600px;
+            }
         }
     </style>
 </head>
@@ -104,20 +111,20 @@
     <audio id="birthday-song" src="https://assets.mixkit.co/sfx/preview/mixkit-happy-birthday-music-box-1224.mp3" preload="auto"></audio>
 
     <div class="photo-frame photo-1" id="photo-1">
-        <img src="photos.img/Katya1.jpg" alt="Фотография 1">
+        <img src="photos.img/Katya1.jpg" alt="Фотографія 1">
     </div>
     <div class="photo-frame photo-2" id="photo-2">
-        <img src="photos.img/Katya2.jpg" alt="Фотография 2">
+        <img src="photos.img/Katya2.jpg" alt="Фотографія 2">
     </div>
     <div class="photo-frame photo-3" id="photo-3">
-        <img src="photos.img/Katya3.jpg" alt="Фотография 3">
+        <img src="photos.img/Katya3.jpg" alt="Фотографія 3">
     </div>
     <div class="photo-frame photo-4" id="photo-4">
-        <img src="photos.img/Katya4.jpg" alt="Фотография 4">
+        <img src="photos.img/Katya4.jpg" alt="Фотографія 4">
     </div>
 
     <div
-        class="bg-white p-6 sm:p-10 lg:p-16 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-lg text-center relative z-20 border-4 border-pink-400">
+        class="main-card-wrapper bg-white p-6 sm:p-10 rounded-3xl shadow-2xl w-full max-w-sm text-center relative z-20 border-4 border-pink-400">
 
         <div id="start-button-container" class="transition-opacity duration-500">
             <h2 class="text-xl sm:text-2xl text-gray-700 mb-6 font-semibold">Натисни, щоб відкрити листівку!</h2>
@@ -139,13 +146,12 @@
                 Вітаю тебе з твоїм днем народження! 🥳
             </p>
 
-            <p class="text-md sm:text-lg text-gray-600 italic leading-relaxed mb-6 sm:mb-8">
+            <p class="text-md sm:text-lg text-gray-600 italic leading-relaxed mb-6 sm:mb-8 text-left">
                 Катю, з днем народження! Бажаю тобі найяснішого, доброго й радісного у цьому світі. Нехай кожен день дарує
                 посмішки, поруч будуть вірні друзі, а в серці живе впевненість у завтрашньому дні. Залишайся такою ж щирою й
                 прекрасною! Обіймаю!
             </p>
             
-            <!-- Подпись -->
             <div class="text-right border-t pt-4 mt-6">
                 <p class="text-pink-600 font-bold text-lg sm:text-xl">Від Мішані</p>
                 <p class="text-xs sm:text-sm text-gray-500 mt-1">:]</p>
@@ -203,19 +209,22 @@
             }, 500);
 
             audio.play().catch(error => {
-                console.warn("Не удалось воспроизвести аудио автоматически:", error);
+                console.warn("Не вдалося відтворити аудіо автоматично:", error);
             });
             
+
             launchConfetti(50, 4000, 70); 
             setTimeout(() => { launchConfetti(30, 3000, 100); }, 1500); 
             setTimeout(() => { launchConfetti(20, 2000, 150); }, 3000); 
             
             setTimeout(() => {
-                photoFrames.forEach((frame, index) => {
-                    setTimeout(() => {
-                        frame.style.opacity = '1'; 
-                    }, index * 200); 
-                });
+                if (window.innerWidth >= 768) { 
+                    photoFrames.forEach((frame, index) => {
+                        setTimeout(() => {
+                            frame.style.opacity = '1'; 
+                        }, index * 200); 
+                    });
+                }
             }, 1000); 
             
             startButton.removeEventListener('click', startCelebration); 
